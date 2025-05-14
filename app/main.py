@@ -16,15 +16,15 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 app.include_router(router)
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="app/templates")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 @app.get("/")
-async def read_root(request: Request, current_user: User = Depends(get_current_user)):
+async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {
         "request": request,
-        "user": current_user
+        "user": None
     })
 
 @app.get("/profile")
