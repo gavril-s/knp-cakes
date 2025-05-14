@@ -42,3 +42,43 @@ def create_cake(cake: dict):
     db.refresh(db_cake)
     db.close()
     return db_cake
+
+@router.put("/cakes/{cake_id}")
+def update_cake(cake_id: int, cake: dict):
+    db = SessionLocal()
+    db_cake = db.query(Cake).filter(Cake.id == cake_id).first()
+    if not db_cake:
+        db.close()
+        raise HTTPException(status_code=404, detail="Торт не найден")
+    
+    db_cake.name = cake.get("name", db_cake.name)
+    db_cake.description = cake.get("description", db_cake.description)
+    db_cake.price = cake.get("price", db_cake.price)
+    
+    db.commit()
+    db.refresh(db_cake)
+    db.close()
+    return db_cake
+
+@router.delete("/cakes/{cake_id}")
+def delete_cake(cake_id: int):
+    db = SessionLocal()
+    db_cake = db.query(Cake).filter(Cake.id == cake_id).first()
+    if not db_cake:
+        db.close()
+        raise HTTPException(status_code=404, detail="Торт не найден")
+    
+    db.delete(db_cake)
+    db.commit()
+    db.close()
+    return {"message": "Торт успешно удален"}
+
+@router.get("/cakes/search")
+def search_cakes(query: str):
+    db = SessionLocal()
+    cakes = db.query(Cake).filter(
+        (Cake.name.ilike(f"%{query}%")) |
+        (Cake.description.ilike(f"%{query}%"))
+    ).all()
+    db.close()
+    return cakes

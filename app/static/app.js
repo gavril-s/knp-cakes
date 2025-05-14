@@ -1,7 +1,39 @@
 document.addEventListener('DOMContentLoaded', function() {
     fetchCakes();
     setupContactForm();
+    setupSearch();
 });
+
+function setupSearch() {
+    const searchButton = document.getElementById('search-button');
+    const searchInput = document.getElementById('search-input');
+    
+    searchButton.addEventListener('click', () => {
+        const query = searchInput.value.trim();
+        if (query) {
+            searchCakes(query);
+        }
+    });
+
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const query = searchInput.value.trim();
+            if (query) {
+                searchCakes(query);
+            }
+        }
+    });
+}
+
+async function searchCakes(query) {
+    try {
+        const response = await fetch(`/cakes/search?query=${encodeURIComponent(query)}`);
+        const cakes = await response.json();
+        displayCakes(cakes);
+    } catch (error) {
+        console.error('Ошибка при поиске тортов:', error);
+    }
+}
 
 async function fetchCakes() {
     try {
