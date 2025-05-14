@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Request
-from .models import Cake, SessionLocal
+from .models import Cake
+from .database import SessionLocal
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart

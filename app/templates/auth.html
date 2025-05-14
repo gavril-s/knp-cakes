@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">ТортоМаркет</div>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#catalog">Каталог</a></li>
+                <li><a href="#contact">Контакты</a></li>
+                <li><a href="/profile">Профиль</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="auth">
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="tab-link active" data-tab="login">Вход</button>
+                    <button class="tab-link" data-tab="register">Регистрация</button>
+                </div>
+
+                <div id="login" class="auth-form active">
+                    <h2>Вход в систему</h2>
+                    <form id="login-form">
+                        <input type="email" placeholder="Email" required>
+                        <input type="password" placeholder="Пароль" required>
+                        <button type="submit">Войти</button>
+                    </form>
+                </div>
+
+                <div id="register" class="auth-form">
+                    <h2>Регистрация</h2>
+                    <form id="register-form">
+                        <input type="text" placeholder="Полное имя" required>
+                        <input type="email" placeholder="Email" required>
+                        <input type="password" placeholder="Пароль" required>
+                        <button type="submit">Зарегистрироваться</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-vk"></i></a>
+            <a href="#"><i class="fab fa-telegram"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p>© 2025 ТортоМаркет. Все права защищены.</p>
+    </footer>
+
+    <script src="/static/auth.js"></script>
+</body>
+</html>

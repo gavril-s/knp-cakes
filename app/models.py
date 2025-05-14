@@ -1,13 +1,19 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, String, Float, Boolean
+from .database import Base
+from passlib.context import CryptContext
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./cakes.db"
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    full_name = Column(String)
+    is_active = Column(Boolean, default=True)
 
-Base = declarative_base()
+    def verify_password(self, password: str):
+        return pwd_context.verify(password, self.hashed_password)
 
 class Cake(Base):
     __tablename__ = "cakes"
